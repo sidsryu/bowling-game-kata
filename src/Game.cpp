@@ -1,65 +1,70 @@
 #include "Game.h"
+#include "Scorer.h"
 #include <algorithm>
+#include <assert.h>
 
 using namespace std;
 
-void Game::add(int pins)
+Game::Game()
+	: scorer(std::make_unique<Scorer>())
+{}
+
+Game::~Game() = default;
+
+bool Game::add(int pins)
 {
-	rollCount++;
-	knockdownPins[rollCount] = pins;	
+	if (!isValid(pins))	return false;
+
+	scorer->add(pins);
+	calculateCurrentFrame(pins);
+	return true;
 }
 
-void Game::clear()
+bool Game::isValid(int pins) const
 {
-	knockdownPins.fill(0);
+	if (pins < 0)	return false;
+	if (is_first_ball && 10 < pins)	return false;	
+	if (10 < last_knockdown_pins + pins)	return false;
+
+	return true;
+}
+
+void Game::calculateCurrentFrame(int pins)
+{
+	if (isLastBallInFrame(pins))
+	{
+		current_frame = min(10, current_frame + 1);
+		last_knockdown_pins = 0;
+		is_first_ball = true;
+	}
+	else
+	{
+		last_knockdown_pins = pins;
+		is_first_ball = false;
+	}
+}
+
+bool Game::isLastBallInFrame(int pins) const
+{
+	return isStrike(pins) || !is_first_ball;
+}
+
+bool Game::isStrike(int pins) const
+{
+	return is_first_ball && pins == 10;
+}
+
+void Game::reset()
+{
+	scorer->reset();
 }
 
 int Game::getScore(int frame) const
 {
-	int score {0};
-	int ball {1};
-	bool isFirstBall = true;
-	int frameScore {0};
-
-	for (int i = 1; i <= frame; )
-	{
-		if (isFirstBall && 10 <= knockdownPins[ball])
-		{
-			frameScore = min(knockdownPins[ball], 10);
-			frameScore += min(knockdownPins[ball + 1], 10);
-			frameScore += min(knockdownPins[ball + 2], 10);
-			ball++;
-			i++;
-			score += frameScore;
-			frameScore = 0;
-		}
-		else if (isFirstBall)
-		{
-			frameScore += knockdownPins[ball];
-			isFirstBall = false;
-			ball++;
-		}
-		else
-		{
-			frameScore += knockdownPins[ball];
-			frameScore = min(frameScore, 10);
-			if (10 <= frameScore)
-			{
-				frameScore += knockdownPins[ball + 1];
-			}
-
-			ball++;
-			i++;
-			isFirstBall = true;
-			score += frameScore;
-			frameScore = 0;
-		}
-	}
-
-	return score;
+	return scorer->getScore(frame);
 }
 
 int Game::getCurrentScore() const
 {
-	return getScore(10);
+	return getScore(current_frame);
 }

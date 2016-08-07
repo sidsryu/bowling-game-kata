@@ -8,16 +8,28 @@ TEST_GROUP(GameTest)
 TEST(GameTest, InitialScore)
 {
 	Game game;
+
+	CHECK_EQUAL(0, game.getScore(0));
 	CHECK_EQUAL(0, game.getCurrentScore());
 }
 
-TEST(GameTest, AddLargePins)
+TEST(GameTest, AddNegativePins)
 {
 	Game game;
-	game.add(100);
-	
-	// large pins is Knockdown all
-	CHECK_EQUAL(10, game.getScore(1));
+	CHECK_FALSE(game.add(-1));
+}
+
+TEST(GameTest, AddLargeStrike)
+{
+	Game game;
+	CHECK_FALSE(game.add(11));
+}
+
+TEST(GameTest, AddLargeSpare)
+{
+	Game game;
+	game.add(9);
+	CHECK_FALSE(game.add(2));
 }
 
 TEST(GameTest, OneThrow)
@@ -26,6 +38,7 @@ TEST(GameTest, OneThrow)
 	game.add(4);
 
 	CHECK_EQUAL(4, game.getScore(1));
+	CHECK_EQUAL(0, game.getCurrentScore());
 }
 
 TEST(GameTest, TwoThrow)
@@ -35,9 +48,10 @@ TEST(GameTest, TwoThrow)
 	game.add(3);
 
 	CHECK_EQUAL(7, game.getScore(1));
+	CHECK_EQUAL(7, game.getCurrentScore());
 }
 
-TEST(GameTest, fiveThrow)
+TEST(GameTest, FiveThrow)
 {
 	Game game;
 	game.add(4);
@@ -49,6 +63,7 @@ TEST(GameTest, fiveThrow)
 	CHECK_EQUAL(7, game.getScore(1));
 	CHECK_EQUAL(15, game.getScore(2));
 	CHECK_EQUAL(18, game.getScore(3));
+	CHECK_EQUAL(15, game.getCurrentScore());
 }
 
 TEST(GameTest, Strike)
@@ -60,6 +75,7 @@ TEST(GameTest, Strike)
 
 	CHECK_EQUAL(17, game.getScore(1));
 	CHECK_EQUAL(24, game.getScore(2));
+	CHECK_EQUAL(24, game.getCurrentScore());
 }
 
 TEST(GameTest, StrikeAfterGutter)
@@ -71,6 +87,7 @@ TEST(GameTest, StrikeAfterGutter)
 
 	CHECK_EQUAL(13, game.getScore(1));
 	CHECK_EQUAL(16, game.getScore(2));
+	CHECK_EQUAL(16, game.getCurrentScore());
 }
 
 TEST(GameTest, Spare)
@@ -83,6 +100,7 @@ TEST(GameTest, Spare)
 
 	CHECK_EQUAL(15, game.getScore(1));
 	CHECK_EQUAL(22, game.getScore(2));
+	CHECK_EQUAL(22, game.getCurrentScore());
 }
 
 TEST(GameTest, Sample)
@@ -118,4 +136,18 @@ TEST(GameTest, Sample)
 	CHECK_EQUAL(97, game.getScore(8));
 	CHECK_EQUAL(117, game.getScore(9));
 	CHECK_EQUAL(133, game.getScore(10));
+	CHECK_EQUAL(133, game.getCurrentScore());
+}
+
+TEST(GameTest, Reset)
+{
+	Game game;
+	game.add(10);
+	game.add(10);
+	game.add(10);
+
+	game.reset();
+
+	CHECK_EQUAL(0, game.getScore(1));
+	CHECK_EQUAL(0, game.getCurrentScore());
 }

@@ -1,17 +1,30 @@
 #pragma once
 
-#include <array>
+#include <memory>
+
+class Scorer;
 
 class Game
 {
 public:
-	void add(int pins);	
-	void clear();
+	Game();
+	~Game();
+
+	bool add(int pins);
+	void reset();
 
 	int getScore(int frame) const;
 	int getCurrentScore() const;	
 
 private:
-	std::array<int, 23> knockdownPins {};
-	int rollCount {0};
+	void calculateCurrentFrame(int pins);
+	bool isLastBallInFrame(int pins) const;
+	bool isStrike(int pins) const;
+	bool isValid(int pins) const;
+
+private:	
+	bool is_first_ball {true};
+	int last_knockdown_pins {0};
+	int current_frame {0};
+	std::unique_ptr<Scorer> scorer;
 };
