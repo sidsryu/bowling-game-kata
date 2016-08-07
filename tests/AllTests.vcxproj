@@ -72,13 +72,13 @@
     <IncludePath>..\include;..\lib\cpputest\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\lib\cpputest\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\build\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)\build\AllTests\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>..\include;..\lib\cpputest\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\lib\cpputest\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\build\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)\build\AllTests\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>F:\Dev\kata\bowling-game-kata\lib\cpputest\include;$(IncludePath)</IncludePath>

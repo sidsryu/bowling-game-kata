@@ -1,13 +1,17 @@
 #pragma once
 
-#include <vector>
+#include <array>
 
 class Game
 {
 public:
-	void add(size_t pins);	
-	size_t getScore() const;
+	void add(int pins);	
+	void clear();
+
+	int getScore(int frame) const;
+	int getCurrentScore() const;	
 
 private:
-	std::vector<size_t> knockdownPins;
+	std::array<int, 23> knockdownPins {};
+	int rollCount {0};
 };
