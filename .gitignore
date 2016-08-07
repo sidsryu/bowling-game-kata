@@ -27,3 +27,7 @@
 *.exe
 *.out
 *.app
+
+# VS2015
+*.VC.db
+*.VC.VC.opendb
