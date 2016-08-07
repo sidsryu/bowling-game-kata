@@ -69,13 +69,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\lib\cpputest\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\include;..\lib\cpputest\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\lib\cpputest\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\build\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\lib\cpputest\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\include;..\lib\cpputest\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\lib\cpputest\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\build\$(Configuration)\</IntDir>
@@ -149,6 +149,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AllTests.cpp" />
+    <ClCompile Include="GameTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BowlingGameKata.vcxproj">
+      <Project>{f108cd4e-6ea4-437a-a758-756498e8bdf6}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
