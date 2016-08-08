@@ -151,3 +151,19 @@ TEST(GameTest, Reset)
 	CHECK_EQUAL(0, game.getScore(1));
 	CHECK_EQUAL(0, game.getCurrentScore());
 }
+
+TEST(GameTest, EndOfArray)
+{
+	Game game;
+	for (int i = 0; i < 9; i++)
+	{
+		game.add(0);
+		game.add(0);
+	}
+
+	game.add(2);
+	game.add(8);
+	game.add(10);
+
+	CHECK_EQUAL(20, game.getCurrentScore());
+}
