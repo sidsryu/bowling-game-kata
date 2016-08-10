@@ -1,16 +1,23 @@
-SET( CPPUTEST_HOME ../lib/cpputest )
+SET( CPPUTEST_HOME ${CMAKE_SOURCE_DIR}/lib/cpputest )
 
-SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${CPPUTEST_HOME}/include/CppUTest/MemoryLeakDetectorNewMacros.h" )
-SET( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -include ${CPPUTEST_HOME}/include/CppUTest/MemoryLeakDetectorMallocMacros.h" )
+IF( gcc )
+	SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${CPPUTEST_HOME}/include/CppUTest/MemoryLeakDetectorNewMacros.h" )
+	SET( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -include ${CPPUTEST_HOME}/include/CppUTest/MemoryLeakDetectorMallocMacros.h" )
+ELSE( gcc)	
+	SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /FI${CPPUTEST_HOME}/include/CppUTest/MemoryLeakDetectorNewMacros.h" )
+	SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /FI${CPPUTEST_HOME}/include/CppUTest/MemoryLeakDetectorMallocMacros.h" )
+ENDIF( gcc )
 
-SET( Test_SRCS tests/AllTests.cpp tests/GameTest.cpp )
-ADD_EXECUTABLE( AllTests ${Test_SRCS} )
 
 INCLUDE_DIRECTORIES( ${CPPUTEST_HOME}/include )
+LINK_DIRECTORIES( ${CPPUTEST_HOME}/lib )
 
-FIND_LIBRARY( CPPUTEST_LIBS NAMES cpputest PATHS ${CPPUTEST_HOME}/lib NO_DEFAULT_PATH )
-TARGET_LINK_LIBRARIES( CppUTest RELEASE ${Test_SRCS} )
-TARGET_LINK_LIBRARIES( CppUTestd DEBUG ${Test_SRCS} )
+SET( Test_SRCS AllTests GameTest )
+ADD_EXECUTABLE( AllTests ${Test_SRCS} )
+
+TARGET_LINK_LIBRARIES( AllTests BowlingGameKata CppUTestd )
 
 INSTALL( TARGETS AllTests DESTINATION bin )
+
+ADD_TEST( Alltests Alltests )
 
