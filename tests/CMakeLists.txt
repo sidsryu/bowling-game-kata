@@ -6,7 +6,7 @@ set(test_src
 )
 
 set(cpputest_lib 
-	CppUTest.lib
+	CppUTest
 )
 
 if (MSVC)
