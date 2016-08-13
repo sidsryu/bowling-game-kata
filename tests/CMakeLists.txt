@@ -1,10 +1,13 @@
+enable_testing()
+
 set(test_src
 	AllTests.cpp
 	GameTest.cpp
 )
 
 set(cpputest_lib 
-	CppUTestd.lib
+	optimized CppUTest.lib
+	debug CppUTestd.lib
 )
 
 if (MSVC)
@@ -22,9 +25,7 @@ link_directories(${cpputest_home}/lib)
 add_executable(AllTests ${test_src})
 
 set_target_properties(AllTests PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-foreach (IT ${CMAKE_CONFIGURATIONS_TYPES})
-	string(TOUPPER ${IT} IT)
-	set_target_properties(AllTests PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${IT} ${CMAKE_CURRENT_BINARY_DIR})
-endforeach ()
+set_target_properties(AllTests PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_BINARY_DIR})
+set_target_properties(AllTests PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_BINARY_DIR})
 
 target_link_libraries(AllTests BowlingGameKata ${cpputest_lib})
