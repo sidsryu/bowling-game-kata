@@ -1,15 +1,16 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-PROJECT( bowling-game-kata )
+project(bowling-game-kata)
 
-SET( Game_SRCS src/Game src/Scorer )
-IF( WIN32 )
-	SET( Game_SRCS ${Game_SRCS} include/Game include/Scorer )
-ENDIF( WIN32 )
+cmake_minimum_required(VERSION 2.6)
 
-INCLUDE_DIRECTORIES( include )
-ADD_LIBRARY( BowlingGameKata STATIC ${Game_SRCS} )
+set(cpputest_home ${PROJECT_SOURCE_DIR}/lib/cpputest)
 
-ADD_SUBDIRECTORY( tests )
+include(CTest)
 
-INSTALL(TARGETS BowlingGameKata DESTINATION bin )
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
+add_subdirectory(src)
+add_subdirectory(tests)
+
+set(INCLUDE_INSTALL_DIR "include")
+set(LIB_INSTALL_BIN "bin")
+set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")

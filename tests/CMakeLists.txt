@@ -1,23 +1,26 @@
-SET( CPPUTEST_HOME ${CMAKE_SOURCE_DIR}/lib/cpputest )
+enable_testing() 
 
-IF( gcc )
-	SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include ${CPPUTEST_HOME}/include/CppUTest/MemoryLeakDetectorNewMacros.h" )
-	SET( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -include ${CPPUTEST_HOME}/include/CppUTest/MemoryLeakDetectorMallocMacros.h" )
-ELSE( gcc)	
-	SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /FI${CPPUTEST_HOME}/include/CppUTest/MemoryLeakDetectorNewMacros.h" )
-	SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /FI${CPPUTEST_HOME}/include/CppUTest/MemoryLeakDetectorMallocMacros.h" )
-ENDIF( gcc )
+set(test_src
+	AllTests.cpp
+	GameTest.cpp
+)
 
+set(cpputest_lib 
+	CppUTestd.lib
+)
 
-INCLUDE_DIRECTORIES( ${CPPUTEST_HOME}/include )
-LINK_DIRECTORIES( ${CPPUTEST_HOME}/lib )
+if (MSVC)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /FI \"${cpputest_home}/include/CppUTest/MemoryLeakDetectorMallocMacros.h\"")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /FI \"${cpputest_home}/include/CppUTest/MemoryLeakDetectorNewMacros.h\"")	
+else ()	
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -include \"${cpputest_home}/include/CppUTest/MemoryLeakDetectorMallocMacros.h\"")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include \"${cpputest_home}/include/CppUTest/MemoryLeakDetectorNewMacros.h\"")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include \"${cpputest_home}/include/CppUTest/MemoryLeakDetectorMallocMacros.h\"")
+endif ()
 
-SET( Test_SRCS AllTests GameTest )
-ADD_EXECUTABLE( AllTests ${Test_SRCS} )
+include_directories(${cpputest_home}/include)
+link_directories(${cpputest_home}/lib)
 
-TARGET_LINK_LIBRARIES( AllTests BowlingGameKata CppUTestd )
-
-INSTALL( TARGETS AllTests DESTINATION bin )
-
-ADD_TEST( Alltests Alltests )
-
+add_executable(AllTests ${test_src})
+target_link_libraries(AllTests BowlingGameKata ${cpputest_lib})
+install(TARGETS AllTests DESTINATION bin)
