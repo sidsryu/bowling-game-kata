@@ -7,8 +7,6 @@ set(test_src
 
 set(cpputest_lib 
 	CppUTest.lib
-	#optimized CppUTest.lib
-	#debug CppUTestd.lib
 )
 
 if (MSVC)

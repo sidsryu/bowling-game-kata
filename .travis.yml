@@ -3,6 +3,9 @@ script: cmake
 compiler: 
  - clang
  - gcc
+os:
+ - linux
+ - osx
 script:
  - cd build
  - cmake .. && make

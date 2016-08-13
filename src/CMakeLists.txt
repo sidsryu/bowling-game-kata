@@ -1,11 +1,11 @@
 set(game_src
-	game.cpp
-	scorer.cpp
+	Game.cpp
+	Scorer.cpp
 )
 
 set(game_inc
-	${PROJECT_SOURCE_DIR}/include/game.h
-	${PROJECT_SOURCE_DIR}/include/scorer.h
+	${PROJECT_SOURCE_DIR}/include/Game.h
+	${PROJECT_SOURCE_DIR}/include/Scorer.h
 )
 
 add_library(BowlingGameKata STATIC ${game_src} ${game_inc})
