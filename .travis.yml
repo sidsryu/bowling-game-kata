@@ -1,11 +1,18 @@
 language: cpp
 script: cmake
 compiler: 
- - clang
- - gcc
+	- clang
 os:
- - linux
- - osx
+	- linux
 script:
- - cd build
- - cmake .. && make
+	- cd build
+	- cmake .. && make
+addons:
+apt:
+	sources:
+		- llvm-toolchain-precise
+        - ubuntu-toolchain-r-test
+    packages:
+        - clang-3.7
+        - g++-5
+        - gcc-5

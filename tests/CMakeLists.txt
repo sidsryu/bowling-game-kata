@@ -27,6 +27,10 @@ set_target_properties(AllTests PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRE
 set_target_properties(AllTests PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_BINARY_DIR})
 set_target_properties(AllTests PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_BINARY_DIR})
 
+if (COMMAND cmake_policy)
+	cmake_policy(SET CMP0003 NEW)
+endif (COMMAND cmake_policy)
+
 if (WIN32)
     target_link_libraries(AllTests BowlingGameKata ${cpputest_lib} winmm.lib)
 else ()
