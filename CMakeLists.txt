@@ -1,6 +1,6 @@
 project(bowling-game-kata)
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 2.4)
 
 set(cpputest_home ${PROJECT_SOURCE_DIR}/lib/cpputest)
 set(CMAKE_CONFIGURATION_TYPES Debug Release)
