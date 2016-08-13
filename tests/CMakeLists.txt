@@ -1,5 +1,3 @@
-enable_testing() 
-
 set(test_src
 	AllTests.cpp
 	GameTest.cpp
@@ -22,5 +20,11 @@ include_directories(${cpputest_home}/include)
 link_directories(${cpputest_home}/lib)
 
 add_executable(AllTests ${test_src})
+
+set_target_properties(AllTests PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+foreach (IT ${CMAKE_CONFIGURATIONS_TYPES})
+	string(TOUPPER ${IT} IT)
+	set_target_properties(AllTests PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${IT} ${CMAKE_CURRENT_BINARY_DIR})
+endforeach ()
+
 target_link_libraries(AllTests BowlingGameKata ${cpputest_lib})
-install(TARGETS AllTests DESTINATION bin)
