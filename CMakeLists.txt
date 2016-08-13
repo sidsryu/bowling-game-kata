@@ -5,10 +5,6 @@ cmake_minimum_required(VERSION 2.4)
 set(cpputest_home ${PROJECT_SOURCE_DIR}/lib/cpputest)
 set(CMAKE_CONFIGURATION_TYPES Debug Release)
 
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED on)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
-
 include(ExternalProject)
 
 set(cpputest_cmake_args

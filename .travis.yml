@@ -1,21 +1,56 @@
 language: cpp
 script: cmake
 compiler: 
-    - clang
+  - clang
 os:
-    - linux
+  - linux
 script:
-    - cd build
-    - cmake .. && make
+  - cd build
+  - cmake .. && make
+sudo: required
+dist: trusty
 addons:
-    apt:
-        sources:
-            - llvm-toolchain-precise
+  apt:
+    sources:  
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-precise-3.6
+    packages:
+      - gcc-5
+      - g++-5
+      - clang-3.6
+matrix:
+  include:
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
             - ubuntu-toolchain-r-test
-        packages:
-            - clang-3.7
+          packages:
+            - g++-4.9
+      env: COMPILER=g++-4.9
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
             - g++-5
-            - gcc-5
-install:
-    - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
-    - if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.7" CC="clang-3.7"; fi
+      env: COMPILER=g++-5
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.6
+          packages:
+            - clang-3.6
+      env: COMPILER=clang++-3.6
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.7
+          packages:
+            - clang-3.7
+      env: COMPILER=clang++-3.7
