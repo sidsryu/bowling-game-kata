@@ -18,7 +18,7 @@ int Scorer::getScore(int frame)
 {
 	ball_cursor = 0;
 
-	auto score {0};
+	int score {0};
 	for (int i = 0; i < frame; i++)
 	{
 		if (isStrike())
