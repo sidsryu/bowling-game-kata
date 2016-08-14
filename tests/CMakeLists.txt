@@ -5,8 +5,8 @@ set(test_src
 	GameTest.cpp
 )
 
-set(cpputest_lib 
-	CppUTest
+set(cpputest_lib
+    ${CMAKE_STATIC_LIBRARY_PREFIX}CppUTest${CMAKE_STATIC_LIBRARY_SUFFIX}
 )
 
 if (MSVC)
@@ -32,9 +32,9 @@ set_target_properties(AllTests PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE
 set_target_properties(AllTests PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_BINARY_DIR})
 
 if (WIN32)
-    target_link_libraries(AllTests BowlingGameKata ${cpputest_lib}.lib winmm.lib)
+    target_link_libraries(AllTests BowlingGameKata ${cpputest_lib} winmm.lib)
 else ()
-	target_link_libraries(AllTests BowlingGameKata ${cpputest_lib}.a)
+	target_link_libraries(AllTests BowlingGameKata ${cpputest_lib})
 endif ()
 
 add_custom_command(TARGET AllTests POST_BUILD COMMAND AllTests)
